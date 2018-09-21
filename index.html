@@ -83,7 +83,7 @@ int main()
 		//Negativo de uma imagem eh: 255 - valor de cor do pixel.
 		for (int i = P1x; i < P2x ; i++) {
 			for (int j = P1y ;j < P2y ;j++) {
-				imagem.at<uchar>(i, j) = 255 - imagem.at<uchar>(i, j);
+				imagem.at&ltuchar&gt(i, j) = 255 - imagem.at&ltuchar&gt(i, j);
 			}
 		}
 		imshow("janela (Modificada)", imagem);
@@ -137,25 +137,25 @@ int main()
 		//Primeiro Quadrante
 		for (int i = 0; i < meiaAltura; i++) {
 			for (int j = 0; j < meiaLargura; j++) {
-				imagem.at<uchar>(i, j) = imagemAUX.at&ltuchar&gt(i + meiaAltura, j + meiaLargura);
+				imagem.at&ltuchar&gt(i, j) = imagemAUX.at&ltuchar&gt(i + meiaAltura, j + meiaLargura);
 			}
 		}
 		//Segundo Quadrante
 		for (int i = meiaAltura; i < altura; i++) {
 			for (int j = 0; j < meiaLargura; j++) {
-				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i - meiaAltura, j + meiaLargura);
+				imagem.at&ltuchar&gt(i, j) = imagemAUX.at&ltuchar&gt(i - meiaAltura, j + meiaLargura);
 			}
 		}
 		//Terceiro Quadrante
 		for (int i = 0; i < meiaAltura; i++) {
 			for (int j = meiaLargura; j < largura; j++) {
-				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i + meiaAltura, j - meiaLargura);
+				imagem.at&ltuchar&gt(i, j) = imagemAUX.at&ltuchar&gt(i + meiaAltura, j - meiaLargura);
 			}
 		}
 		//Quarto Quadrante
 		for (int i = meiaAltura; i < altura; i++) {
 			for (int j = meiaLargura; j < largura; j++) {
-				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i - meiaAltura, j - meiaLargura);
+				imagem.at&ltuchar&gt(i, j) = imagemAUX.at&ltuchar&gt(i - meiaAltura, j - meiaLargura);
 			}
 		}
 		imshow("janela (Modificada)", imagem);
@@ -166,6 +166,7 @@ int main()
   </pre>
   <img src="cangurutrocado.png"><br/>
   
+  <br/>
     c) Corrigindo Labeling<br/>
       No programa labeling.cpp, se houver o caso em que haja mais de 255 objetos na imagem, A rotulação chegará a um valor que atrapalhará o processo. O problema pode ser corrigido alterando a linha de código abaixo:<br/>
       <pre class='brush: cpp'>
@@ -176,8 +177,107 @@ int main()
       floodFill(imagem, p, 100);
       </pre>
       
-      
-      c) Corrigindo Labeling<br/>
+ <br/>     
+      d) Conta Buracos<br/>
+  <pre class='brush: cpp'>
+#include &lt iostream &gt
+#include &lt opencv2/opencv.hpp &gt
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	cout << "03 CONTA BURACOS" << endl << endl;
+	
+	Mat imagem, mask;
+	int altura, largura;
+	int nobjects, nburaco;
+	CvPoint p;
+
+	imagem = imread("bolhas.png", CV_LOAD_IMAGE_GRAYSCALE);
+
+	if (!imagem.data) {
+		cout << "imagem nao carregou corretamente\n";
+		return(-1);
+	}
+	altura = imagem.size().height;
+	largura = imagem.size().width;
+
+	p.x = 0;
+	p.y = 0;
+
+	//Apaga Buracos nas borda verticais
+	for (int i = 0; i < altura; i++) {
+		p.x = 0;
+		if (imagem.at&ltuchar&gt(i, p.x) == 255) {
+			p.y = i;
+			floodFill(imagem, p, 0);
+		}
+		p.x = largura - 1;
+		if (imagem.at&ltuchar&gt(i, p.x) == 255) {
+			p.y = i;
+			floodFill(imagem, p, 0);
+		}
+	}
+	//Apaga Buracos nas borda Horizontais
+	for (int i = 0; i < largura; i++) {
+		p.y = 0;
+		if (imagem.at&ltuchar&gt(p.y, i) == 255) {
+			p.x = i;
+			floodFill(imagem, p, 0);
+		}
+		p.y = altura - 1;
+		if (imagem.at&ltuchar&gt(p.y, i) == 255) {
+			p.x = i;
+			floodFill(imagem, p, 0);
+		}
+	}
+	p.x = 0;
+	p.y = 0;
+	//Pinta o fundo de outra cor diferente do preto original
+	floodFill(imagem, p, 1);
+	// Conta quantos objetos tem
+	nobjects = 0;
+	for (int i = 0; i < altura; i++) {
+		for (int j = 0; j < largura; j++) {
+			if (imagem.at&ltuchar&gt(i, j) == 255) {
+				// achou um objeto
+				nobjects++;
+				p.x = j;
+				p.y = i;
+				floodFill(imagem, p, 100);
+				
+			}
+		}
+	}
+	p.x = 0;
+	p.y = 0;
+	nburaco = 0;
+	for (int i = 0; i < altura; i++) {
+		for (int j = 0; j < largura; j++) {
+			if (imagem.at&ltuchar&gt(i, j) == 0 && imagem.at<uchar>(i, j - 1) == 100) {
+				// achou um buraco
+				nburaco++;
+				p.x = j;
+				p.y = i;
+				floodFill(imagem, p, 150);
+				p.x = j - 1;
+				floodFill(imagem, p, 50);
+			}
+		}
+	}
+	cout << "A imagem possui " << nobjects << " objetos, " << nburaco <<" com buracos." << endl;
+	imshow("imagem", imagem);
+	imwrite("novo.png", imagem);
+	waitKey();
+
+	return 0;
+}
+  </pre>
+  
+  <br/>
+        c) Corrigindo Labeling<br/>
   <pre class='brush: cpp'>
   </pre>
   
