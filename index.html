@@ -377,6 +377,94 @@ int main()
   <img src="quarto02.png"><br/>
   
     <br/>
+        f) Detector de Movimento<br/>
+  <pre class='brush: cpp'>
+  
+#include &lt iostream &gt
+#include &lt opencv2/opencv.hpp &gt
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	cout << "05 Detector de Movimento" << endl << endl;
+	
+	Mat imagem;
+	int largura, altura;
+	VideoCapture cap;
+	vector&ltMat&gt planes;
+	Mat histB, hist_old;
+	int nbins = 64;
+	float range[] = { 0, 256 };
+	const float *histrange = { range };
+	bool uniform = true;
+	bool acummulate = false;
+
+	cap.open(0);
+
+	if (!cap.isOpened()) {
+		cout << "cameras indisponiveis";
+		return -1;
+	}
+
+	largura = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+	altura = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+	cout << "largura = " << largura << endl;
+	cout << "altura  = " << altura << endl;
+
+	int histw = nbins, histh = nbins / 2;
+	Mat histImgB(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+
+	bool primeiro = true;
+	int n=0;
+
+	//Esperar preparar camera
+	while (n < 100) {
+		cap >> imagem;
+		imshow("imagem", imagem);
+		n++;
+	}
+	//fim
+	n = 0;
+	while (1) {
+		cap >> imagem;
+		split(imagem, planes);
+
+		calcHist(&planes[2], 1, 0, Mat(), histB, 1,
+			&nbins, &histrange,
+			uniform, acummulate);
+
+		if (primeiro) {
+			hist_old = histB.clone();
+			primeiro = false;
+		}
+
+		double compara = compareHist(histB, hist_old, CV_COMP_CHISQR);
+		if (compara > 900) {
+			cout << compara << endl;
+			putText(imagem, "ALERTA!!", cvPoint(50, 250), CV_FONT_HERSHEY_DUPLEX, 4, cvScalar(0, 0, 255), 1, CV_AA);
+			if (n % 5 == 0) {
+				string texto = "invasor" + to_string(n) + ".png";
+				imwrite(texto, imagem);
+			}
+			n++;
+		}
+
+		hist_old = histB.clone();
+
+		imshow("imagem", imagem);
+		if (waitKey(30) >= 0) break;
+	}
+	return 0;
+}
+  
+  </pre>
+  <img src="ok.png"><br/>
+  <img src="Alerta.png"><br/>
+  
+      <br/>
         c) Corrigindo Labeling<br/>
   <pre class='brush: cpp'>
   </pre>
