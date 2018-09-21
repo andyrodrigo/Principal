@@ -7,7 +7,7 @@
 <body>
  <h1>Processamento Digital de Imagens</h1>
  
- 1. Manipulando Pixels em uma imagem:<br/>
+ 1. Exercícios:<br/>
  <br/>
  a) Regiões<br/>
   
@@ -96,6 +96,79 @@ int main()
   <img src="tela.png"><br/>
   <img src="cang1.png">
   <img src="cang2.png">
+  <br/>
+  
+  b) Troca regiões<br/>
+  
+  <pre class='brush: cpp'>
+  #include <iostream>
+#include <opencv2/opencv.hpp>
+
+using namespace std;
+using namespace cv;
+
+//Troca Regioes
+
+int main()
+{
+	cout << "EXERCICIO 01 - TROCA REGIOES" << endl << endl;
+	
+	Mat imagem;
+	Mat imagemAUX;
+	
+	imagem = imread("canguru.png", CV_LOAD_IMAGE_GRAYSCALE);
+	imagemAUX = imread("canguru.png", CV_LOAD_IMAGE_GRAYSCALE);
+	if (!imagem.data) {
+		cout << ("Nao abriu arquivo") << endl;
+	}
+	else {
+
+		imshow("janela (Original)", imagem);
+
+		waitKey(3000);
+
+		int P1x, P1y, P2x, P2y;
+		int altura = imagem.size().height;
+		int largura = imagem.size().width;
+		int meiaAltura = altura / 2;
+		int meiaLargura = largura / 2;
+		
+		//Primeiro Quadrante
+		for (int i = 0; i < meiaAltura; i++) {
+			for (int j = 0; j < meiaLargura; j++) {
+				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i + meiaAltura, j + meiaLargura);
+			}
+		}
+		//Segundo Quadrante
+		for (int i = meiaAltura; i < altura; i++) {
+			for (int j = 0; j < meiaLargura; j++) {
+				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i - meiaAltura, j + meiaLargura);
+			}
+		}
+		//Terceiro Quadrante
+		for (int i = 0; i < meiaAltura; i++) {
+			for (int j = meiaLargura; j < largura; j++) {
+				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i + meiaAltura, j - meiaLargura);
+			}
+		}
+		//Quarto Quadrante
+		for (int i = meiaAltura; i < altura; i++) {
+			for (int j = meiaLargura; j < largura; j++) {
+				imagem.at<uchar>(i, j) = imagemAUX.at<uchar>(i - meiaAltura, j - meiaLargura);
+			}
+		}
+		imshow("janela (Modificada)", imagem);
+	}
+	waitKey();
+	return 0;
+}
+  </pre>
+  
+    b) Troca regiões<br/>
+  
+  <pre class='brush: cpp'>
+  </pre>
+  
 </body>
 </html>
 
