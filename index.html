@@ -12,8 +12,8 @@
  a) Regiões<br/>
   
  <pre class='brush: cpp'>
-#include <iostream>
-#include <opencv2/opencv.hpp>
+#include iostream
+#include opencv2/opencv.hpp
 
 using namespace std;
 using namespace cv;
@@ -101,8 +101,8 @@ int main()
   b) Troca regiões<br/>
   
   <pre class='brush: cpp'>
-  #include <iostream>
-#include <opencv2/opencv.hpp>
+#include iostream
+#include opencv2/opencv.hpp
 
 using namespace std;
 using namespace cv;
@@ -111,7 +111,7 @@ using namespace cv;
 
 int main()
 {
-	cout << "EXERCICIO 01 - TROCA REGIOES" << endl << endl;
+	cout << "EXERCICIO 02 - TROCA REGIOES" << endl << endl;
 	
 	Mat imagem;
 	Mat imagemAUX;
@@ -163,9 +163,20 @@ int main()
 	return 0;
 }
   </pre>
+  <img src="cangurutrocado.png"><br/>
   
-    b) Troca regiões<br/>
-  
+    c) Corrigindo Labeling<br/>
+      No programa labeling.cpp, se houver o caso em que haja mais de 255 objetos na imagem, A rotulação chegará a um valor que atrapalhará o processo. O problema pode ser corrigido alterando a linha de código abaixo:<br/>
+      <pre class='brush: cpp'>
+      floodFill(image,p,nobjects);
+      </pre>
+      fixando o valor da variavel, mudamos para, por exemplo:
+      <pre class='brush: cpp'>
+      floodFill(imagem, p, 100);
+      </pre>
+      
+      
+      c) Corrigindo Labeling<br/>
   <pre class='brush: cpp'>
   </pre>
   
