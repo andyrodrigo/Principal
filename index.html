@@ -612,7 +612,7 @@ int main(int argvc, char** argv) {
   </pre>
   
   <h1>Filtro de Daltonismo</h1>
-  
+  <br/>
   O objetivo deste projeto é a criação de um programa que lê uma imagem qualquer e mostra de forma simulada
   como seria esta imagem na visão de uma pessoa daltônica, essa simulação se dá através de uma<br/>
   transformação da imagem mudando os valores HSV dos pixels.<br/>
@@ -623,26 +623,26 @@ int main(int argvc, char** argv) {
   de cores da visão considerana normal para os seres humanos. Destes 7, os 4 principais tipos de<br/>
   Daltonismo são: Protanopia, Deuteranopia, Tritanopia e Monocromacia.<br/>
   <br/>
-  
+  <br/>
   PROPANOPIA<br/>
   A propanopia é caracterizada pela ausência de cones vermelhos na retina, isso faz com que o indivíduo com este
   problema enxergue um espectro amarelo e azul, como mostrado na imagem abaixo:<br/>
   <img src="prop.jpg"><br/>
-  
+  <br/>
   DEUTERANOPIA<br/>
   A deuteranopia é caracterizada pela ausência de cones verdes na retina, apesar de ser um problema diferente do
   anterior, o resultado é algo similar, apesar de have diferenças.:<br/>
   <img src="deut.jpg"><br/>
-  
+  <br/>
   TRITANOPIA<br/>
   A tritanopia é caracterizada pela ausência de cones azuis na retina, isso faz com que o indivíduo com este
   problema enxergue um espectro vermelho e violeta:<br/>
   <img src="trit.jpg"><br/>
-  
+  <br/>
   MONOCROMACIA<br/>
   A monocromacia faz com que o indivíduo enxergue um espectro preto e branco apenas:<br/>
   <img src="acro.jpg"><br/>
-  
+  <br/>
   Como fazer uma imagem ser mostrada em preto e branco é demasiado simples e o espectro enxergado pelos indivíduos
   como propanopia e deuteranopia são muito similares, o programa criado se foca em mostrar a transformação das imagens
   para Propanopia e Tritanopia apenas.<br/>
@@ -962,14 +962,32 @@ int main()
 	return 0;
 }
   </pre>
-  
+  <br/>
   Como o programa ainda está em ajustes, ele gera 4 imagens, na qual, 2 delas não utilizam as funções que alteram o V
   (Value), porque alguma imagens que possuem tonalidade muito claras não obtém bons resultados com a alteração deste parâmetro.
   Sendo ainda necessário futuramente que o valor de saturação seja melhor aproveitado na ponderação do V. <br/>
   <br/>
-  As seguintes imagens são alguns dos resultados do Programa (Original, Tritanopia e Propanopia, respectivamente):<br/>
+  As seguintes imagens são alguns dos resultados do Programa (Original, Propanopia e Tritanopia, respectivamente):<br/>
   <br/>
-   <img src="tudin.jpg"><br/>
+  Teste de Daltonismo: <br/>
+   <img src="1.jpg"><br/>
+   <img src="both.png"><br/>
+   Arco-Íris: <br/>
+  <img src="arco.png"><br/>
+  <img src="aP.png"><br/>
+  <img src="aT.png"><br/>
+     Frutas: <br/>
+  <img src="frutas2.png"><br/>
+  <img src="fP.png"><br/>
+  <img src="fT.png"><br/>
+     Balões: <br/>
+  <img src="balao.png"><br/>
+  <img src="b2.png"><br/>
+  <img src="b1.png"><br/>
+     Genipabu: <br/>
+  <img src="geni.png"><br/>
+  <img src="gP.png"><br/>
+  <img src="gT.png"><br/>
   
 </body>
 </html>
