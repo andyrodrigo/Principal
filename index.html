@@ -631,12 +631,12 @@ int main(int argvc, char** argv) {
   <br/>
   DEUTERANOPIA<br/>
   A deuteranopia é caracterizada pela ausência de cones verdes na retina, apesar de ser um problema diferente do
-  anterior, o resultado é algo similar, apesar de have diferenças.:<br/>
+  anterior, o resultado é algo similar, apesar de haver diferenças.:<br/>
   <img src="deut.jpg"><br/>
   <br/>
   TRITANOPIA<br/>
   A tritanopia é caracterizada pela ausência de cones azuis na retina, isso faz com que o indivíduo com este
-  problema enxergue um espectro vermelho e violeta:<br/>
+  problema enxergue um espectro vermelho e ciano:<br/>
   <img src="trit.jpg"><br/>
   <br/>
   MONOCROMACIA<br/>
@@ -649,15 +649,15 @@ int main(int argvc, char** argv) {
   A lógica dele funciona da seguinte forma, ele varre a imagem pixel a pixel, e envia os valores HSV (Matiz, Saturação e Valor) para
   uma função que irá modificar os valores para o espectro respectivo (Propanopia e Tritanopia), gerando duas novas imagens que são a
   simulação da visão de alguém com daltonismo.<br/>
-  Por exemplo, o valor de Matiz(H) entre vermelho e Ciano (0 a 180 aproximadamente) é levado a algo próximo a um amarelo (60)na
-  propanopia. O valor H do pixel é usado para ponderar seu valor no espectro através de uma equação e deixa mais ou menos próximo
+  Por exemplo, o valor de Matiz (H) entre vermelho e Ciano (0 a 180 aproximadamente) é levado a algo próximo a um amarelo (60) na
+  propanopia. O valor H do pixel é usado para ponderar seu valor no espectro através de uma equação, e o deixa mais ou menos próximo
   do valor central de amarelo (60). A mesma lógica é aplicada para os valores de S e V da imagem.<br/>
   O código completo pode ser visto abaixo:<br/><br/>
   
    <pre class='brush: cpp'>
   
-#include <iostream>
-#include <opencv2/opencv.hpp>
+#include &lt iostream &gt
+#include &lt opencv2/opencv.hpp &gt
 
 using namespace std;
 using namespace cv;
